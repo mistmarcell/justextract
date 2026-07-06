@@ -23,7 +23,7 @@ export const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(
     const [showControls, setShowControls] = useState(true);
     const [showSpeedMenu, setShowSpeedMenu] = useState(false);
     const [hovering, setHovering] = useState(false);
-    const controlsTimeout = useRef<NodeJS.Timeout>();
+    const controlsTimeout = useRef<NodeJS.Timeout | null>(null);
     const [thumbnailPreview, setThumbnailPreview] = useState<{ x: number; time: number } | null>(null);
 
     const {
