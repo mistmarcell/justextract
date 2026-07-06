@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { Suspense, useState, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -21,7 +21,7 @@ import { useUIStore, useTimelineStore } from '@/lib/store';
 
 type EditorTab = 'upload' | 'url' | 'media';
 
-export default function EditorPage() {
+function EditorContent() {
   const searchParams = useSearchParams();
   const defaultTab = searchParams.get('tab') === 'url' ? 'url' : 'upload';
   const [activeTab, setActiveTab] = useState<EditorTab>(defaultTab);
@@ -170,5 +170,24 @@ export default function EditorPage() {
         </div>
       </div>
     </AppShell>
+  );
+}
+
+export default function EditorPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-surface-950 via-primary-950 to-surface-950 flex items-center justify-center p-4">
+        <div className="w-full max-w-4xl glass-strong rounded-2xl p-8">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-surface-700 rounded w-1/3" />
+            <div className="h-4 bg-surface-700 rounded w-1/2" />
+            <div className="h-32 bg-surface-700 rounded" />
+            <div className="h-24 bg-surface-700 rounded" />
+          </div>
+        </div>
+      </div>
+    }>
+      <EditorContent />
+    </Suspense>
   );
 }
