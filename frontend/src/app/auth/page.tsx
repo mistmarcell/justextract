@@ -1,15 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Film, Mail, Lock, User, Github, Chrome, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, User, Github, Chrome, Eye, EyeOff } from 'lucide-react';
 import { authApi } from '@/lib/api';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
-import Link from 'next/link';
 
-export default function AuthPage() {
+function AuthForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isRegister, setIsRegister] = useState(searchParams.get('register') === 'true');
@@ -169,5 +168,25 @@ export default function AuthPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-surface-950 via-primary-950 to-surface-950 flex items-center justify-center p-4">
+        <div className="w-full max-w-md glass-strong rounded-2xl p-8 text-center">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-surface-700 rounded w-1/2 mx-auto" />
+            <div className="h-4 bg-surface-700 rounded w-3/4 mx-auto" />
+            <div className="h-10 bg-surface-700 rounded" />
+            <div className="h-10 bg-surface-700 rounded" />
+            <div className="h-10 bg-surface-700 rounded" />
+          </div>
+        </div>
+      </div>
+    }>
+      <AuthForm />
+    </Suspense>
   );
 }
