@@ -6,22 +6,19 @@
         },
         "backend": {
             "root": "backend",
-            "entrypoint": "dist/index.js",
-            "buildCommand": "npm run build"
+            "runtime": "container"
         }
     },
     "rewrites": [
         {
-            "source": "/api/backend(/.*)?",
+            "source": "/api/(.*)",
             "destination": {
-                "type": "service",
                 "service": "backend"
             }
         },
         {
             "source": "/(.*)",
             "destination": {
-                "type": "service",
                 "service": "frontend"
             }
         }
