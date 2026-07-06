@@ -23,6 +23,8 @@ export async function fetchUrlMetadata(url: string): Promise<UrlMetadata> {
 
   if (hostname.includes('youtube') || hostname.includes('youtu.be')) {
     return fetchYouTubeMetadata(url);
+  } else if (hostname.includes('tiktok') || hostname.includes('vm.tiktok')) {
+    return fetchYouTubeMetadata(url);
   } else if (hostname.includes('vimeo')) {
     return fetchVimeoMetadata(url);
   } else if (hostname.includes('drive.google.com')) {
@@ -166,7 +168,7 @@ export async function downloadFromUrl(
   const parsedUrl = new URL(url);
   const hostname = parsedUrl.hostname.toLowerCase();
 
-  if (hostname.includes('youtube') || hostname.includes('youtu.be') || hostname.includes('vimeo')) {
+  if (hostname.includes('youtube') || hostname.includes('youtu.be') || hostname.includes('tiktok') || hostname.includes('vm.tiktok') || hostname.includes('vimeo')) {
     return downloadWithYtDlp(url, outputDir, jobId, onProgress);
   } else {
     return downloadDirect(url, outputDir, jobId, onProgress);
